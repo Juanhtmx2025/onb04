@@ -1,0 +1,11 @@
+.POSITIVE {
+  background-color: green;
+}
+
+.NEUTRAL {
+  background-color: gray;
+}
+
+.NEGATIVE {
+  background-color: red;
+}

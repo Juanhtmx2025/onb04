@@ -1,0 +1,451 @@
+<html lang="es">
+
+<head>
+    <title>Encuestas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/app.css">
+</head>
+
+<body>
+    <div id="app">
+        <div class="container">
+            <div class="row mt-5">
+                <div class="col-12 offset-md-1 col-md-10">
+                    <div class="card">
+                        <div class="card-header bg-dark text-light p-5">
+                            <h2>Encuesta de satisfacciónSASA</h2>
+                        </div>
+                        <div class="card-body">
+                            <div v-show="!loading" v-if="item.external_code == ''">
+                                <div class="row">
+                                    <div class="col-12 col-md-4 offset-md-2">
+                                        <div class="form-group">
+                                            <label>CURP<span style="color: #ff0000;">*</span></label>
+                                            <input type="text" class="form-control text-uppercase" v-model="curp"/>
+                                            <span v-for="error in errors" :key="error.param">
+                                                <small v-if="error.param == 'curp'" class="text-danger">{{ error.msg }}</small>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-3">
+                                        <div class="form-group">
+                                            <label class="d-none d-md-block">&nbsp;</label>
+                                            <button class="btn btn-primary btn-block" 
+                                                @click.prevent="searchCURP()">Validar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-show="!loading" v-else>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5>Hola {{ item.full_name }},<br>te agradeceríamos tu retroalimentación contestando la siguiente encuesta:</h5>
+                                    </div>
+                                </div>      
+                                <hr class="mt-2">                         
+                                <fieldset class="form-group">
+                                    <div class="row">
+                                        <legend class="col-form-label col-sm-7 pt-0">¿Estoy satisfecho con el proceso de reclutamiento y selección que tuve?</legend>
+                                        <div class="col-sm-5">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" v-model="item.q10"
+                                                    value="1">
+                                                <label class="form-check-label">Muy insatisfecho</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" v-model="item.q10"
+                                                    value="2">
+                                                <label class="form-check-label" for="gridRadios2">Poco satisfecho</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" v-model="item.q10"
+                                                    value="3">
+                                                <label class="form-check-label" for="gridRadios2">Bien</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" v-model="item.q10"
+                                                    value="4">
+                                                <label class="form-check-label" for="gridRadios2">Satisfecho</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" v-model="item.q10"
+                                                    value="5">
+                                                <label class="form-check-label" for="gridRadios2">Bastante satisfecho</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span v-for="error in errors" :key="error.param">
+                                        <small v-if="error.param == 'q10'" class="text-danger">{{ error.msg }}</small>
+                                    </span>
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <div class="row">
+                                        <legend class="col-form-label col-sm-7 pt-0">¿Estoy satisfecho con el proceso de bienvenida que me dieron al ingresar a Estafeta?</legend>
+                                        <div class="col-sm-5">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" v-model="item.q11"
+                                                    value="1">
+                                                <label class="form-check-label">Muy insatisfecho</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" v-model="item.q11"
+                                                    value="2">
+                                                <label class="form-check-label" for="gridRadios2">Poco satisfecho</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" v-model="item.q11"
+                                                    value="3">
+                                                <label class="form-check-label" for="gridRadios2">Bien</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" v-model="item.q11"
+                                                    value="4">
+                                                <label class="form-check-label" for="gridRadios2">Satisfecho</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" v-model="item.q11"
+                                                    value="5">
+                                                <label class="form-check-label" for="gridRadios2">Bastante satisfecho</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span v-for="error in errors" :key="error.param">
+                                        <small v-if="error.param == 'q11'" class="text-danger">{{ error.msg }}</small>
+                                    </span>
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <div class="row">
+                                        <legend class="col-form-label col-sm-7 pt-0">¿En mi curso de inducción me
+                                            explicaron cúal es el propósito superior de Estafeta?</legend>
+                                        <div class="col-sm-5">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" v-model="item.q1"
+                                                    value="true">
+                                                <label class="form-check-label" for="gridRadios1">
+                                                    Si
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" v-model="item.q1"
+                                                    value="false">
+                                                <label class="form-check-label" for="gridRadios2">
+                                                    No
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span v-for="error in errors" :key="error.param">
+                                        <small v-if="error.param == 'q1'" class="text-danger">{{ error.msg }}</small>
+                                    </span>
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <div class="row">
+                                        <legend class="col-form-label col-sm-7 pt-0">¿Considero que el servicio que
+                                            brinda Estafeta cumple con el propósito superior?</legend>
+                                        <div class="col-sm-5">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" v-model="item.q2"
+                                                    value="true">
+                                                <label class="form-check-label" for="gridRadios1">
+                                                    Si
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" v-model="item.q2"
+                                                    value="false">
+                                                <label class="form-check-label" for="gridRadios2">
+                                                    No
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span v-for="error in errors" :key="error.param">
+                                        <small v-if="error.param == 'q2'" class="text-danger">{{ error.msg }}</small>
+                                    </span>
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <div class="row">
+                                        <legend class="col-form-label col-sm-7 pt-0">¿En Estafeta se viven los valores
+                                            organizacionales?</legend>
+                                        <div class="col-sm-5">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" v-model="item.q3"
+                                                    value="true">
+                                                <label class="form-check-label" for="gridRadios1">
+                                                    Si
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" v-model="item.q3"
+                                                    value="false">
+                                                <label class="form-check-label" for="gridRadios2">
+                                                    No
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span v-for="error in errors" :key="error.param">
+                                        <small v-if="error.param == 'q3'" class="text-danger">{{ error.msg }}</small>
+                                    </span>
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <div class="row">
+                                        <legend class="col-form-label col-sm-7 pt-0">¿Se cómo conducirme con base a la
+                                            priorización de los valores organizacionales?</legend>
+                                        <div class="col-sm-5">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" v-model="item.q4"
+                                                    value="true">
+                                                <label class="form-check-label" for="gridRadios1">
+                                                    Si
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" v-model="item.q4"
+                                                    value="false">
+                                                <label class="form-check-label" for="gridRadios2">
+                                                    No
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span v-for="error in errors" :key="error.param">
+                                        <small v-if="error.param == 'q4'" class="text-danger">{{ error.msg }}</small>
+                                    </span>
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <div class="row">
+                                        <legend class="col-form-label col-sm-7 pt-0">¿Las herramientas necesarias para
+                                            efectuar mi trabajo me fueron entregadas en tiempo?</legend>
+                                        <div class="col-sm-5">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" v-model="item.q5"
+                                                    value="true">
+                                                <label class="form-check-label" for="gridRadios1">
+                                                    Si
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" v-model="item.q5"
+                                                    value="false">
+                                                <label class="form-check-label" for="gridRadios2">
+                                                    No
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span v-for="error in errors" :key="error.param">
+                                        <small v-if="error.param == 'q5'" class="text-danger">{{ error.msg }}</small>
+                                    </span>
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <div class="row">
+                                        <legend class="col-form-label col-sm-7 pt-0">¿Cuento con el apoyo de mi lider
+                                            para resolver los problemas que se me van presentando en el trabajo?
+                                        </legend>
+                                        <div class="col-sm-5">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" v-model="item.q6"
+                                                    value="true">
+                                                <label class="form-check-label" for="gridRadios1">
+                                                    Si
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" v-model="item.q6"
+                                                    value="false">
+                                                <label class="form-check-label" for="gridRadios2">
+                                                    No
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span v-for="error in errors" :key="error.param">
+                                        <small v-if="error.param == 'q6'" class="text-danger">{{ error.msg }}</small>
+                                    </span>
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <div class="row">
+                                        <legend class="col-form-label col-sm-7 pt-0">¿La relación entre mis compañeros y
+                                            yo es de respeto y colaboración?</legend>
+                                        <div class="col-sm-5">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" v-model="item.q7"
+                                                    value="true">
+                                                <label class="form-check-label" for="gridRadios1">
+                                                    Si
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" v-model="item.q7"
+                                                    value="false">
+                                                <label class="form-check-label" for="gridRadios2">
+                                                    No
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span v-for="error in errors" :key="error.param">
+                                        <small v-if="error.param == 'q7'" class="text-danger">{{ error.msg }}</small>
+                                    </span>
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <div class="row">
+                                        <legend class="col-form-label col-sm-7 pt-0">¿Considero que la inducción al
+                                            puesto que recibí me permitió tener una clara idea del trabajo que estoy
+                                            desempeñando?</legend>
+                                        <div class="col-sm-5">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" v-model="item.q8"
+                                                    value="true">
+                                                <label class="form-check-label" for="gridRadios1">
+                                                    Si
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" v-model="item.q8"
+                                                    value="false">
+                                                <label class="form-check-label" for="gridRadios2">
+                                                    No
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span v-for="error in errors" :key="error.param">
+                                        <small v-if="error.param == 'q8'" class="text-danger">{{ error.msg }}</small>
+                                    </span>
+                                </fieldset>
+                                <div class="form-group row">
+                                    <label for="comments" class="col-12 col-form-label">Comentarios
+                                        adicionales</label>
+                                    <div class="col-12">
+                                        <textarea class="form-control" v-model="item.comments" cols="1"
+                                            rows="8"></textarea>
+                                    </div>
+                                    <span v-for="error in errors" :key="error.param" style="margin-left: 2px;">
+                                        <small v-if="error.param == 'comments'"
+                                            class="text-danger">{{ error.msg }}</small>
+                                    </span>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-3 mt-4">
+                                        <button @click.prevent="submit()" :disabled="loading" class="btn btn-dark btn-block">Enviar</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center" v-show="loading">
+                                <i class="fa fa-spinner fa-spin fa-3x"></i>
+                                <h3 class="mt-2">{{ loading_msg }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script>
+        /*globals axios Swal Swal*/
+        var app = new Vue({
+            el: '#app',
+            data: {
+                errors: [],
+                curp: '',
+                item: {
+                    external_code: '',
+                    full_name: '',
+                    q1: '',
+                    q2: '',
+                    q3: '',
+                    q4: '',
+                    q5: '',
+                    q6: '',
+                    q7: '',
+                    q8: '',
+                    q10: '',
+                    q11: '',
+                    comments: '',
+                },
+                loading: false,
+                loading_msg: ''
+            },
+            methods: {
+                searchCURP(){
+                    if (this.loading === true) {
+                        return;
+                    }
+                    this.loading_msg = 'Buscando...';
+                    this.loading = true;
+                    axios.post('/search', { curp: this.curp })
+                    .then(response => {
+                        this.loading = false;
+                        this.clear();
+                        this.item.external_code = response.data.external_code;
+                        this.item.full_name = response.data.full_name;
+                        //Swal.fire('!Enviada!', response.data.message, 'success');
+                    })
+                    .catch(error => {
+                        this.loading = false;
+                        this.errors = error.response.data.errors;
+                        if (error.response.data.message)
+                            Swal.fire('!Error!', error.response.data.message, 'error');
+                    });
+
+                },
+                submit() {
+                    if (this.loading === true) {
+                        return;
+                    }
+                    this.loading_msg = 'Enviando...';
+                    this.loading = true;
+                    axios.post('/encuesta', this.item).then(response => {
+                        this.loading = false;
+                        this.clear();
+                        Swal.fire('!Enviada!', response.data.message, 'success');
+                    })
+                    .catch(error => {
+                        this.loading = false;
+                        this.errors = error.response.data.errors;
+                        if (error.response.data.message)
+                            Swal.fire('!Error!', error.response.data.message, 'error');
+                    });
+                },
+                clear(){
+                    this.errors = [];
+                    this.curp = '';
+                    this.item.external_code =  '';
+                    this.item.q1 =  '';
+                    this.item.q2 =  '';
+                    this.item.q3 =  '';
+                    this.item.q4 =  '';
+                    this.item.q5 =  '';
+                    this.item.q6 =  '';
+                    this.item.q7 =  '';
+                    this.item.q8 =  '';
+                    this.item.comments =  '';
+                    this.item.q10 =  '';
+                    this.item.q11 =  '';
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

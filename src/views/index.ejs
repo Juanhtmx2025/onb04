@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="og:title" content="IBM Watson Personality Insights">
+  <meta name="og:description" content="">
+  <link rel="shortcut icon" href="/images/favicon.png" type="image/png">
+  <link rel="icon" href="/images/favicon.png" type="image/png">
+  <link rel="stylesheet" href="<$= host $>/css/pdf.css">
+  <link rel="stylesheet" href="<$= host $>/css/pdf_new.css">
+</head>
+
+<body>
+  <!-- top level heading -->
+  <header class="_demo--heading">
+    <div class="_demo--container">
+      <a class="wordmark" href="http://www.ibm.com/watson/developer/">
+        <span class="wordmark--left">Estafeta</span>
+        <span class="wordmark--right">Analitycs</span>
+      </a>
+    </div>
+  </header>
+  <br>
+  <div class="_demo--container">
+    <div class="_demo--container">
+      <div class="_content" style="padding: 0;">
+          <h2 class="base--h2">Retrato de la Personalidad</h2>
+          <div class="output-summary">
+            <div class="output-summary--left">
+              <h4 class="base--h4">Sentimientos</h4>
+              <div id="personalitySummary" class="output-summary--summary">
+                <h5 class="base--h5">Puntuaciones de opinión</h5>
+                <table style="width: 100%;">
+                  <$- entitySentimentScores $>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div style="page-break-after: always"></div>
+
+          <div class="output-summary">
+            <div class="output-summary--left">
+              <h4 class="base--h4">Sentimientos</h4>
+              <div id="personalitySummary" class="output-summary--summary">
+                <h5 class="base--h5">Palabras Clave</h5>
+                <table style="width: 100%;">
+                  <$- keywordSentimentScores $>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div style="page-break-after: always"></div>
+
+          <div class="output-summary">
+            <div class="output-summary--left">
+              <h4 class="base--h4">Emociones</h4>
+              <div id="personalitySummary" class="output-summary--summary">
+                <h5 class="base--h5">Puntuaciones de opinión</h5>
+                <table style="width: 100%;">
+                  <$- entityEmotionScores $>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div style="page-break-after: always"></div>
+
+          <div class="output-summary">
+            <div class="output-summary--left">
+              <h4 class="base--h4">Emociones</h4>
+              <div id="personalitySummary" class="output-summary--summary">
+                <h5 class="base--h5">Palabras Clave</h5>
+                <table style="width: 100%;">
+                  <$- keywordEmotionScores $>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

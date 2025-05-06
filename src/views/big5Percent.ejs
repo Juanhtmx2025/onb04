@@ -1,0 +1,34 @@
+<% items.forEach(function(item, key, list){ %>
+    <% if (typeof list[key - 1] != 'undefined' && (list[key - 1].score >= 50 && item.score < 50)) { %>
+        <hr class="base--hr output-stats-column--hr">
+    <% } %>
+        <div class="percent-bar-and-score">
+        <div class="percent-bar-and-score--label output-big-5--trait-label <%= (item.score >= 50) ? 'output-big-5--trait-label_POSITIVE' : 'output-big-5--trait-label_NEGATIVE' %>">
+            <%= item.name %>
+            <i class="icon icon-down-arrow percent-bar-and-score--toggle-icon"></i>
+        </div>
+        <div class="percent-bar percent-bar-and-score--percent-bar">
+            <div class="percent-bar--meter" style="-webkit-transform: translate(<%= item.score %>%); transform: translate(<%= item.score %>%)">
+            <div class="percent-bar--ball <%= (item.score >= 50) ? 'percent-bar--ball_POSITIVE-FILL' : 'percent-bar--ball_NEGATIVE-FILL' %>"></div>
+            <div class="percent-bar-and-score--number">
+                <%= item.score %>%</div>
+            </div>
+        </div>
+        </div>
+        <div class="output-big-5--sub-tree">
+        <% item.children.forEach(function(item2, key, list) { %>
+            <div class="percent-bar-and-score">
+            <div class="percent-bar-and-score--label output-big-5--sub-trait-label <%= (item2.score >= 50) ? 'output-big-5--sub-trait-label_POSITIVE' : 'output-big-5--sub-trait-label_NEGATIVE' %>">
+                <%= item2.name %>
+            </div>
+            <div class="percent-bar percent-bar-and-score--percent-bar">
+                <div class="percent-bar--meter" style="-webkit-transform: translate(<%= item2.score %>%); transform: translate(<%= item2.score %>%)">
+                <div class="percent-bar--ball <%= (item2.score >= 50) ? 'percent-bar--ball_POSITIVE-FILL' : 'percent-bar--ball_NEGATIVE-FILL' %>"></div>
+                <div class="percent-bar-and-score--number">
+                    <%= item2.score %>%</div>
+                </div>
+            </div>
+            </div>
+            <% }); %>
+        </div>
+<% });%>

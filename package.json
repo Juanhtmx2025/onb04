@@ -1,0 +1,36 @@
+{
+	"name": "personality-insights",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"start": "node app.js"
+	},
+	"dependencies": {
+		"@aternus/csv-to-xlsx": "^1.0.14",
+		"axios": "^1.8.4",
+		"body-parser": "^1.20.3",
+		"cfenv": "^1.2.4",
+		"cookie-parser": "^1.4.5",
+		"dotenv": "^8.2.0",
+		"ejs": "^3.1.3",
+		"express": "^4.15.5",
+		"express-session": "^1.17.0",
+		"express-validator": "^6.5.0",
+		"htmlparser": "1.7.7",
+		"lodash": "^4.17.21",
+		"moment": "^2.27.0",
+		"moment-timezone": "^0.5.48",
+		"nodemailer": "^6.10.1",
+		"personality-text-summary": "^2.1.7",
+		"personality-trait-info": "^3.0.5",
+		"puppeteer": "^24.4.0",
+		"request": "2.72.0"
+	},
+	"repository": {},
+	"engines": {
+		"node": ">=16.*"
+	},
+	"devDependencies": {
+		"@types/lodash": "^4.14.173"
+	}
+}
