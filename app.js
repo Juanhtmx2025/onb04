@@ -134,6 +134,18 @@ app.get('/', (req, res) => {
   res.status(200).send('🟢 Aplicación corriendo');
 });
 
+// Ruta de prueba para disparar un error crítico y validar envío de correo
+app.get('/test-error', (req, res) => {
+  logger.logAction('ERR_008', '💥 Prueba de error crítico manual', 'app.js:/test-error', {
+    mensaje: 'Esto es una prueba para forzar un error crítico'
+  });
+
+  res.json({
+    message: 'Error crítico de prueba generado'
+  });
+});
+
+
 // Manejador de 404 para rutas no definidas
 app.use((req, res, next) => {
   if (!res.headersSent) {
