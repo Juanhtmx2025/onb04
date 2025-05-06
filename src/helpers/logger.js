@@ -369,8 +369,15 @@ function logAction(code, description, origin, data = {}) {
   
   // SOLO enviar correo si el error está en la lista explícita de errores críticos
   if (isCritical) {
-    sendCriticalErrorEmail(logEntry);
+    (async () => {
+      try {
+        await sendCriticalErrorEmail(logEntry);
+      } catch (error) {
+        console.error('❌ Error al enviar correo (async wrapper):', error);
+      }
+    })();
   }
+  
   
   // Verificar si es momento de enviar el reporte semanal
   if (shouldSendWeeklyReport()) {
