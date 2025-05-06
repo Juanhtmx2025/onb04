@@ -40,6 +40,7 @@ let lastWeeklyReport = null;
 const CRITICAL_ERROR_CODES = [
   'ERR_050',         // Error crítico al crear adjunto
   'ERR_060',         // Error crítico al guardar respuestas
+  'ERR_008',          // Error de maximo de caracteres perimitido
   'ERR_COMM_FAILURE', // Fallo de comunicación con servicios externos
   'ERR_DB_CONNECTION', // Problemas de conexión a BD
   'ERR_SERVER',      // Problemas del servidor
