@@ -8,7 +8,6 @@ RUN apt-get update && apt-get install -y \
     libasound2 \
     libatk-bridge2.0-0 \
     libatk1.0-0 \
-    nodemailer \
     libcups2 \
     libdbus-1-3 \
     libgdk-pixbuf2.0-0 \
