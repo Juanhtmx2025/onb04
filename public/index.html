@@ -321,15 +321,33 @@
                                     </span>
                                 </fieldset>
                                 <div class="form-group row">
-                                    <label for="comments" class="col-12 col-form-label">Comentarios
-                                        adicionales</label>
+                                    <label for="comments" class="col-12 col-form-label">Comentarios adicionales</label>
                                     <div class="col-12">
-                                        <textarea class="form-control" v-model="item.comments" cols="1"
-                                            rows="8"></textarea>
+                                        <textarea 
+                                            class="form-control" 
+                                            v-model="item.comments" 
+                                            cols="1"
+                                            rows="8"
+                                            :class="{ 
+                                                'border-danger': (!item.comments && showErrorMessage) || 
+                                                                 (item.comments && countWords(item.comments) < 100) || 
+                                                                 (item.comments && item.comments.length >= 2500),
+                                                'border-success': item.comments && countWords(item.comments) >= 100 && item.comments.length < 2500
+                                            }"
+                                            @input="checkComments"
+                                            @focus="showErrorMessage = true"
+                                            :maxlength="2500"
+                                        ></textarea>
+                                        
+                                        <small class="text-danger" v-if="showErrorMessage && (!item.comments || countWords(item.comments) < 100)">
+                                            Se requiere al menos 100 palabras.
+                                        </small>
+                                        <small class="text-danger" v-else-if="item.comments && item.comments.length >= 2500">
+                                            No se pueden escribir más de 2500 caracteres.
+                                        </small>
                                     </div>
                                     <span v-for="error in errors" :key="error.param" style="margin-left: 2px;">
-                                        <small v-if="error.param == 'comments'"
-                                            class="text-danger">{{ error.msg }}</small>
+                                        <small v-if="error.param == 'comments'" class="text-danger">{{ error.msg }}</small>
                                     </span>
                                 </div>
                                 <div class="form-group row">
@@ -384,7 +402,8 @@
                     comments: '',
                 },
                 loading: false,
-                loading_msg: ''
+                loading_msg: '',
+                showErrorMessage: false
             },
             methods: {
                 searchCURP(){
@@ -442,7 +461,20 @@
                     this.item.comments =  '';
                     this.item.q10 =  '';
                     this.item.q11 =  '';
-                }
+                },
+                countWords(text) {
+                    if (!text || text.trim() === '') return 0;
+                    return text.trim().split(/\s+/).length;
+                },
+                checkComments() {
+                    // Limitar a 2500 caracteres
+                    if (this.item.comments && this.item.comments.length > 2500) {
+                        this.item.comments = this.item.comments.substring(0, 2500);
+                    }
+                    
+                    // Siempre mostrar mensaje de error cuando se está escribiendo y no se cumplen las condiciones
+                    this.showErrorMessage = true;
+                }        
             }
         });
     </script>

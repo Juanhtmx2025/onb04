@@ -18,12 +18,15 @@ exports.encuesta = [
     .withMessage("Esta pregunta es obligatoria.")
     .bail()
     .custom((value, { req }) => {
-      let words = value.split(" ").length;
+      let words = value.split(/\s+/).length;
       if (words < 100) {
         throw new Error('Se requieren mínimo 100 palabras.');
       }
       return true;
-    }),
+    })
+    .bail()
+    .isLength({ max: 2500 })
+    .withMessage('El comentario no debe exceder 2500 caracteres.'),
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty())
